@@ -1,8 +1,9 @@
-using System.Collections;
 using AutoMapper;
 using ChatterServiceApi.DbContext;
+using ChatterServiceApi.Models;
 using ChatterServiceApi.Models.Dto;
 using ChatterServiceApi.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatterServiceApi.Repository;
 
@@ -10,35 +11,27 @@ public class ChatterRepository : IChatterRepository
 {
     private readonly ChatterServiceDbContext _db;
     private readonly IMapper _mapper;
-    
+
     public ChatterRepository(ChatterServiceDbContext db, IMapper mapper)
     {
         _db = db;
         _mapper = mapper;
     }
-    
-    public async Task<IEnumerable<ChatterDto>> GetChatters()
+
+    public async Task<IEnumerable<AbstractChatter>> GetAllChatters()
     {
-        var chatterList = await _db.Chatters.ToListAsync();
-        return _mapper.Map<List<ChatterDto>>(chatterList);
+        if (_db.Chatters != null) return await _db.Chatters.ToListAsync();
+        return new List<AbstractChatter>();
     }
 
-    public async Task<ChatterDto> GetChatterById(int id)
+    public Task<ChatterDto> GetChatterById(int id)
     {
-        var chatter = await _db.Chatters.FirstOrDefaultAsync(x => x.Id == id);
-        return _mapper.Map<ChatterDto>(chatter);
+        throw new NotImplementedException();
     }
 
     public Task<IEnumerable<ChatterDto>> GetByFieldContains(string value)
     {
-        var chatterList = _db.Chatters.Where(x => x.Name.Contains(value) || 
-                                                  x.Message.Contains(value) ||
-                                                  x.Email.Contains(value) ||
-                                                  x.GivenName.Contains(value) ||
-                                                  x.Surname.Contains(value)
-                                                  );
-
-        return _mapper.Map<IEnumerable<ChatterDto>>(chatterList);
+        throw new NotImplementedException();
     }
 
     public Task<ChatterDto> CreateUpdateChatter(ChatterDto chatter)
@@ -49,5 +42,16 @@ public class ChatterRepository : IChatterRepository
     public Task<bool> DeleteChatter(int id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<ChatterDto>> GetChatters()
+    {
+        if (_db.Chatters != null)
+        {
+            var chatterList = await _db.Chatters.ToListAsync();
+            return _mapper.Map<List<ChatterDto>>(chatterList);
+        }
+
+        return new[] {new ChatterDto()};
     }
 }
