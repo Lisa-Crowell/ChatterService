@@ -1,6 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ChatterServiceApi.Models;
 
 public class ChatterPerson : AbstractChatter
 {
-    string ChatterPersonName {get; set;}
+    [Key] 
+    public int Id { get; set; }
+    public ChatterIdentity Identity {get; set;}
 }

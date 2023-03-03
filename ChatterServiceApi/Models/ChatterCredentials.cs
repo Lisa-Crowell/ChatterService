@@ -4,8 +4,10 @@ namespace ChatterServiceApi.Models;
 
 public class ChatterCredentials
 {
+    [Key]
+    public int Id {get; set;}
     [Required]
-    string UserName {get; set;}
+    public string UserName {get; set;}
     [Required]
-    string Password {get; set;}
+    public string Password {get; set;}
 }

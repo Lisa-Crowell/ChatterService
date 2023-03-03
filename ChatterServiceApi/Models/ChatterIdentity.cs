@@ -1,11 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ChatterServiceApi.Models;
 
 public class ChatterIdentity
 {
-    int ChatterId {get; set;}
-    string ChatterCredientials {get; set;}
-    List<ContactInformation> ContactInformation {get; set;}
-    string GivenName {get; set;}
-    string Surname {get; set;}
-    public DateTime DateOfBirth { get; set; }
+    [Key]
+    public int Id {get; set;}
+    public ChatterCredentials Credentials {get; set;}
+    public List<ContactInformation> ContactInformation {get; set;}
+    public List<PersonalName> GivenNames {get; set;}
+    public List<PersonalName> Surnames {get; set;}
+    public ChatterDate DateOfBirth { get; set; }
 }
