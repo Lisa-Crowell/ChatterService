@@ -5,8 +5,6 @@ namespace ChatterServiceApi.Models;
 
 public class ChatterOrganization: AbstractChatter
 {
-    [Key]
-    public int Id {get; set;}
     public List<OrganizationName> Names {get; set;}
     public List<ChatterIdentity> Identities {get; set;}
 

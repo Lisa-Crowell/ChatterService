@@ -27,22 +27,24 @@ public class ChatterServiceDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     public DbSet<PersonalName>? Names { get; set; }
     
-    public DbSet<AccountName> EmailAccounts { get; set; }
+    public DbSet<AccountName>? EmailAccounts { get; set; }
     
-    public DbSet<DomainName> EmailDomains { get; set; }
+    public DbSet<DomainName>? EmailDomains { get; set; }
     
-    public DbSet<EmailExtension> EmailExtensions { get; set; }
+    public DbSet<EmailExtension>? EmailExtensions { get; set; }
 
-    public DbSet<ChatterDate> Dates { get; set; }
+    public DbSet<ChatterDate>? Dates { get; set; }
     
-    public DbSet<Username> Usernames { get; set; }
+    public DbSet<Username>? Usernames { get; set; }
     
-    public DbSet<Password> Passwords { get; set; }
+    public DbSet<Password>? Passwords { get; set; }
     
     
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AbstractChatter>().Ignore(e => e.Id);
+        
         modelBuilder.Entity<ChatterOrganization>().HasBaseType<AbstractChatter>();
         modelBuilder.Entity<ChatterOrganization>().HasMany(e => e.Names);
         modelBuilder.Entity<ChatterOrganization>().HasMany(e => e.Identities);
