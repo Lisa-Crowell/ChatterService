@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <Folder Include="DbContext\DbMappings" />
+      <Folder Include="Migrations" />
     </ItemGroup>
 
 </Project>

@@ -43,30 +43,8 @@ public class ChatterServiceDbContext : Microsoft.EntityFrameworkCore.DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AbstractChatter>().Ignore(e => e.Id);
-        
-        modelBuilder.Entity<ChatterOrganization>().HasBaseType<AbstractChatter>();
-        modelBuilder.Entity<ChatterOrganization>().HasMany(e => e.Names);
-        modelBuilder.Entity<ChatterOrganization>().HasMany(e => e.Identities);
-        
-        modelBuilder.Entity<ChatterPerson>().HasBaseType<AbstractChatter>();
-        modelBuilder.Entity<ChatterPerson>().HasOne(e => e.Identity);
-        
-        modelBuilder.Entity<ChatterIdentity>().HasOne(e => e.Credentials);
-        modelBuilder.Entity<ChatterIdentity>().HasMany(e => e.ContactInformation);
-        modelBuilder.Entity<ChatterIdentity>().HasMany(e => e.GivenNames);
-        modelBuilder.Entity<ChatterIdentity>().HasMany(e => e.Surnames);
-        modelBuilder.Entity<ChatterIdentity>().HasOne(e => e.DateOfBirth);
-
-        modelBuilder.Entity<EmailAddress>().HasOne(e => e.AccountName);
-        modelBuilder.Entity<EmailAddress>().HasOne(e => e.DomainName);
-        modelBuilder.Entity<EmailAddress>().HasOne(e => e.DomainExtension);
-        
-        modelBuilder.Entity<ContactInformation>().HasOne(e => e.EmailAddress);
-        modelBuilder.Entity<ContactInformation>().HasOne(e => e.PhoneNumber);
-        
-        modelBuilder.Entity<ChatterCredentials>().HasOne(e => e.UserName);
-        modelBuilder.Entity<ChatterCredentials>().HasOne(e => e.Password);
-
+        modelBuilder.Entity<ChatterIdentity>()
+            .HasOne<ChatterCredentials>(identity => identity.Credentials)
+            .WithMany(credentials => credentials.AssociatedIdentities);
     }
 }

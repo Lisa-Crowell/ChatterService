@@ -10,4 +10,5 @@ public class ChatterCredentials
     public string UserName {get; set;}
     [Required]
     public string Password {get; set;}
+    public List<ChatterIdentity> AssociatedIdentities {get; set;}
 }
