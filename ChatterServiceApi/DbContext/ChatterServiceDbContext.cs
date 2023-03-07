@@ -1,5 +1,6 @@
 using ChatterServiceApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace ChatterServiceApi.DbContext;
 
@@ -45,6 +46,17 @@ public class ChatterServiceDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         modelBuilder.Entity<ChatterIdentity>()
             .HasOne<ChatterCredentials>(identity => identity.Credentials)
-            .WithMany(credentials => credentials.AssociatedIdentities);
+            .WithMany(credentials => credentials.AssociatedIdentities)
+            .HasForeignKey("CredentialsId");
+
+        modelBuilder.Entity<ChatterIdentity>()
+            .HasMany<PersonalName>(identity => identity.GivenNames)
+            .WithMany(name => name.AssociatedIdentities)
+            .UsingEntity<ManyToManyJoinEntityTypeConvention>("NamesToIdentities_GivenNames");
+
+        modelBuilder.Entity<ChatterIdentity>()
+            .HasMany<PersonalName>(identity => identity.Surnames)
+            .WithMany(name => name.AssociatedIdentities)
+            .UsingEntity<ManyToManyJoinEntityTypeConvention>("NamesToIdentities_Surnames");
     }
 }

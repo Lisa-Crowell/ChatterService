@@ -8,4 +8,5 @@ public class PersonalName
     [Key]
     public int Id {get; set;}
     public string Value {get; set;}
+    public IEnumerable<ChatterIdentity> AssociatedIdentities { get; set; }
 }
