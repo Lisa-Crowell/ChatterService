@@ -4,8 +4,10 @@ namespace ChatterServiceApi.Models;
 
 public class ContactInformation
 {
+    [Key]
+    public int Id {get; set;}
     [Required]
-    int PhoneNumber {get; set;}
+    public PhoneNumber PhoneNumber {get; set;}
     [EmailAddress, Required]
-    string EmailAddress {get; set;}
+    public EmailAddress EmailAddress {get; set;}
 }

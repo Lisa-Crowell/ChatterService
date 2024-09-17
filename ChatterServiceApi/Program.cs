@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 // get the connection string
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ChatterServiceDbContext>(options => 
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseNpgsql(connectionString, b => b.MigrationsAssembly("ChatterServiceApi")));
 
 // add mapping configuration
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
